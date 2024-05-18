@@ -2,4 +2,5 @@ Aquí puedes encontrar la versión live: [https://docs.google.com/spreadsheets/d
 bye 👋🏻
 
 Esta es la lógica de las preguntas:
-![Uploading Flow tecnologgias.jpg…]()
+![Flow tecnologgias](https://github.com/joseshardin/selecciona/assets/83982978/d7039375-6dcc-404c-bbbe-81176cbe154d)
+
