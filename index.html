@@ -14,7 +14,7 @@
     />
     <style>
       body {
-        font-family: Arial, sans-serif;
+        font-family: "Poppins", sans-serif;
         background-color: #fff;
         color: #333;
         margin: 0;
@@ -33,7 +33,7 @@
         );
       }
 
-      #dynamicForm {
+      #formContainer {
         max-width: 400px;
         width: 100%;
         padding: 20px;
@@ -99,6 +99,51 @@
       p {
         margin-bottom: 20px;
       }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-content {
+        background-color: #fff;
+        margin: 20% auto;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 400px;
+        text-align: center;
+        position: relative;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      #formContainer {
+        display: none;
+      }
+
+      #formContainer.show {
+        display: block;
+      }
     </style>
   </head>
   <!-- Google tag (gtag.js) -->
@@ -116,7 +161,18 @@
     gtag("config", "G-NTLVGV7RJX");
   </script>
   <body>
-    <div id="dynamicForm">
+    <div id="welcomeModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>
+          😊 Bienvenido a este asistente de elección de tecnologías Rappi
+          (vertical retail). Por favor, si tienes una consulta adicional
+          comentarlo a tu responsable comercial asignado.
+        </p>
+        <button id="ingresarBtn">Ingresar</button>
+      </div>
+    </div>
+    <div id="formContainer">
       <div id="logo">
         <img
           src="https://onbrappi.netlify.app/rappi-logo-1.png"
