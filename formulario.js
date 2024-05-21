@@ -1,4 +1,41 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const welcomeModal = document.getElementById('welcomeModal');
+  const formContainer = document.getElementById('formContainer');
+
+  // Verificar si ya se ha mostrado el modal
+  const hasShownModal = sessionStorage.getItem('hasShownModal');
+
+  // Si no se ha mostrado, mostrar el modal y marcarlo como mostrado
+  if (!hasShownModal) {
+    welcomeModal.style.display = 'block';
+    sessionStorage.setItem('hasShownModal', true);
+  }
+
+  // Cerrar el modal al hacer clic en la 'X' o en "Ingresar". Ya lo quité jee 😉
+
+  const closeBtn = document.querySelector('.close');
+  const ingresarBtn = document.getElementById('ingresarBtn');
+
+  const closeModal = () => {
+    welcomeModal.style.display = 'none';
+    formContainer.classList.add('show');
+  };
+
+  closeBtn.addEventListener('click', closeModal);
+  ingresarBtn.addEventListener('click', closeModal);
+
+  // Mostrar el modal al salir de la página
+  window.addEventListener('beforeunload', () => {
+    sessionStorage.removeItem('hasShownModal');
+    welcomeModal.style.display = 'block';
+  });
+
+
+});
+
+
+
+document.addEventListener('DOMContentLoaded', () => { // URL con link del drive (google sheets)
   const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQChIIMh-HVXcHLNO5GGkmWLeszRQVOfWv3iO5_GkynFVG8F4tVRphmL8V6qBtp79rI3sLsSPu4lYp4/pub?output=csv';
 
   fetch(csvUrl)
@@ -22,11 +59,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function initializeForm(data) {
-    const form = document.getElementById('dynamicForm');
+    const formContainer = document.getElementById('formContainer');
     let currentQuestion = data.find(q => q.ID === 'q1');
 
     function renderQuestion(question) {
-      form.innerHTML = `
+      formContainer.innerHTML = `
         <div id="logo">
           <img src="https://onbrappi.netlify.app/rappi-logo-1.png" alt="Rappi Logo">
         </div>
@@ -47,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
           optionElement.textContent = option;
           select.appendChild(optionElement);
         });
-        form.appendChild(select);
+        formContainer.appendChild(select);
 
         select.addEventListener('change', () => {
           const nextQuestionId = question.Condiciones[select.value];
@@ -61,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (question.Tipo === 'text') {
         const p = document.createElement('p');
         p.innerHTML = question.Pregunta.replace(/\n/g, '<br>');
-        form.appendChild(p);
+        formContainer.appendChild(p);
       }
 
       const restartButton = document.createElement('button');
@@ -71,11 +108,11 @@ document.addEventListener('DOMContentLoaded', () => {
         currentQuestion = data.find(q => q.ID === 'q1');
         renderQuestion(currentQuestion);
       });
-      form.appendChild(restartButton);
+      formContainer.appendChild(restartButton);
     }
 
     function renderEndMessage(message) {
-      form.innerHTML = `
+      formContainer.innerHTML = `
         <div id="logo">
           <img src="https://onbrappi.netlify.app/rappi-logo-1.png" alt="Rappi Logo">
         </div>
@@ -89,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentQuestion = data.find(q => q.ID === 'q1');
         renderQuestion(currentQuestion);
       });
-      form.appendChild(restartButton);
+      formContainer.appendChild(restartButton);
     }
 
     renderQuestion(currentQuestion);
