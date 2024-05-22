@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const welcomeModal = document.getElementById('welcomeModal');
   const formContainer = document.getElementById('formContainer');
 
+
   // Verificar si ya se ha mostrado el modal
   const hasShownModal = sessionStorage.getItem('hasShownModal');
 
@@ -11,8 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sessionStorage.setItem('hasShownModal', true);
   }
 
-  // Cerrar el modal al hacer clic en la 'X' o en "Ingresar". Ya lo quité jee 😉
-
+  // Cerrar el modal al hacer clic en la 'X' o en "Ingresar", auqneu ya 'X' no se muestra u.u
   const closeBtn = document.querySelector('.close');
   const ingresarBtn = document.getElementById('ingresarBtn');
 
@@ -30,12 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     welcomeModal.style.display = 'block';
   });
 
-
-});
-
-
-
-document.addEventListener('DOMContentLoaded', () => { // URL con link del drive (google sheets)
+  // URL con link del drive (google sheets). Cambiar de ser necesario!!! 
   const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQChIIMh-HVXcHLNO5GGkmWLeszRQVOfWv3iO5_GkynFVG8F4tVRphmL8V6qBtp79rI3sLsSPu4lYp4/pub?output=csv';
 
   fetch(csvUrl)
@@ -59,20 +54,22 @@ document.addEventListener('DOMContentLoaded', () => { // URL con link del drive 
   }
 
   function initializeForm(data) {
-    const formContainer = document.getElementById('formContainer');
     let currentQuestion = data.find(q => q.ID === 'q1');
 
     function renderQuestion(question) {
+      // Limpieza de todo
       formContainer.innerHTML = `
         <div id="logo">
           <img src="https://onbrappi.netlify.app/rappi-logo-1.png" alt="Rappi Logo">
         </div>
-        <label>${question.Pregunta.replace(/\n/g, '<br>')}</label>
       `;
 
       if (question.Tipo === 'select') {
-        const select = document.createElement('select');
+        const label = document.createElement('label');
+        label.innerHTML = question.Pregunta.replace(/\n/g, '<br>');
+        formContainer.appendChild(label);
 
+        const select = document.createElement('select');
         const defaultOption = document.createElement('option');
         defaultOption.value = '';
         defaultOption.textContent = 'Selecciona una opción';
@@ -85,6 +82,14 @@ document.addEventListener('DOMContentLoaded', () => { // URL con link del drive 
           select.appendChild(optionElement);
         });
         formContainer.appendChild(select);
+
+        // Contenido adicional de la columna F. Esta vaina no está funcionando bien, por corregir
+        if (question.F) {
+          const additionalContent = document.createElement('div');
+          additionalContent.className = 'additional-content';
+          additionalContent.innerHTML = question.F.replace(/\n/g, '<br>');
+          formContainer.appendChild(additionalContent);
+        }
 
         select.addEventListener('change', () => {
           const nextQuestionId = question.Condiciones[select.value];
@@ -99,6 +104,14 @@ document.addEventListener('DOMContentLoaded', () => { // URL con link del drive 
         const p = document.createElement('p');
         p.innerHTML = question.Pregunta.replace(/\n/g, '<br>');
         formContainer.appendChild(p);
+
+        // Mostrar el contenido adicional de la columna F. Esta vaina no está funcionando bien, por corregir
+        if (question.F) {
+          const additionalContent = document.createElement('div');
+          additionalContent.className = 'additional-content';
+          additionalContent.innerHTML = question.F.replace(/\n/g, '<br>');
+          formContainer.appendChild(additionalContent);
+        }
       }
 
       const restartButton = document.createElement('button');
@@ -112,6 +125,7 @@ document.addEventListener('DOMContentLoaded', () => { // URL con link del drive 
     }
 
     function renderEndMessage(message) {
+      // Limpiar
       formContainer.innerHTML = `
         <div id="logo">
           <img src="https://onbrappi.netlify.app/rappi-logo-1.png" alt="Rappi Logo">
