@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Formulario Condicional Rappi</title>
+    <title>🧡 Tecnologías Rappi Disponibles RETAIL</title>
     <meta
       name="description"
       content="Selecciona las tecnologías disponibles para Rappi Retailer. Contacta a tu comercial asignado si tienes alguna consulta."
     />
     <meta
       name="keywords"
-      content="Rappi, Rappi Retailer, tecnologías, formulario, selección, consulta"
+      content="Rappi, Rappi Retailer, tecnologías, formulario, selección, consulta, API, Open Orders"
     />
     <style>
       body {
@@ -31,18 +31,20 @@
           #eb5a65,
           #ea4e64
         );
+        overflow-y: auto;
       }
-
       #formContainer {
-        max-width: 400px;
+        max-width: 700px;
         width: 100%;
+        max-height: 80%;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         background-color: #fff;
         animation: fadeIn 0.5s ease-in-out;
+        margin: 20px;
+        overflow: auto;
       }
-
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -51,24 +53,20 @@
           opacity: 1;
         }
       }
-
       #logo {
         display: flex;
         justify-content: center;
         margin-bottom: 20px;
       }
-
       #logo img {
         max-width: 150px;
       }
-
       label {
         display: block;
         margin-bottom: 10px;
         font-weight: bold;
         color: #ea4e64;
       }
-
       select {
         width: 100%;
         padding: 10px;
@@ -78,7 +76,6 @@
         font-size: 16px;
         margin-bottom: 20px;
       }
-
       button {
         display: block;
         width: 100%;
@@ -91,15 +88,12 @@
         font-size: 16px;
         margin-top: 20px;
       }
-
       button:hover {
         background-color: #eb5a65;
       }
-
       p {
         margin-bottom: 20px;
       }
-
       .modal {
         display: none;
         position: fixed;
@@ -111,7 +105,6 @@
         overflow: auto;
         background-color: rgba(0, 0, 0, 0.5);
       }
-
       .modal-content {
         background-color: #fff;
         margin: 20% auto;
@@ -122,52 +115,42 @@
         position: relative;
         font-family: "Poppins", sans-serif;
       }
-
       .close {
         color: #aaa;
         float: right;
         font-size: 28px;
         font-weight: bold;
       }
-
       .close:hover,
       .close:focus {
         color: black;
         text-decoration: none;
         cursor: pointer;
       }
-
       #formContainer {
         display: none;
       }
-
       #formContainer.show {
         display: block;
       }
+      .additional-content {
+        /*   está por corregir esto*/
+        margin-top: 20px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+      }
     </style>
   </head>
-  <!-- Google tag (gtag.js) -->
-  <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=G-NTLVGV7RJX"
-  ></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
-
-    gtag("config", "G-NTLVGV7RJX");
-  </script>
   <body>
     <div id="welcomeModal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
         <p>
-          😊 Bienvenido a este asistente de elección de tecnologías Rappi
-          (vertical retail). Por favor, si tienes una consulta adicional
-          comentarlo a tu responsable comercial asignado.
+          😊 Bienvenido al asistente para elección de tecnologías Rappi
+          (vertical Retail). Por favor, si tienes una consulta adicional
+          comentarlo al equipo de Onboarding.
         </p>
         <button id="ingresarBtn">Ingresar</button>
       </div>
@@ -180,7 +163,6 @@
         />
       </div>
     </div>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="formulario.js"></script>
   </body>
