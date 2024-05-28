@@ -157,6 +157,12 @@ document.addEventListener('DOMContentLoaded', () => {
       restartButtonContainer.appendChild(restartButton);
       formContainer.appendChild(restartButtonContainer);
 
+      // Envía un evento personalizado a Google Analytics
+      gtag('event', 'page_view', {
+        'page_location': updatedUrl,
+        'page_path': updatedUrl
+      });
+
       // Actualizar la URL en la barra de direcciones del navegador
       history.replaceState({}, '', updatedUrl);
     }
