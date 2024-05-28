@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     welcomeModal.style.display = 'block';
   });
 
-  // SOLO cambiar aquí. Esto es lo más imporante!
+  // Solamente cambiar esta URL, nada más.
   const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQChIIMh-HVXcHLNO5GGkmWLeszRQVOfWv3iO5_GkynFVG8F4tVRphmL8V6qBtp79rI3sLsSPu4lYp4/pub?output=csv';
 
   fetch(csvUrl)
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentQuestion = nextQuestion;
             renderQuestion(nextQuestion);
           } else {
-            renderEndMessage(question.Pregunta);
+            renderEndMessage(question.Pregunta, question.Path);
           }
         });
       } else if (question.Tipo === 'text') {
@@ -125,11 +125,14 @@ document.addEventListener('DOMContentLoaded', () => {
           formContainer.appendChild(additionalContent);
         }
 
-        renderEndMessage(question.Pregunta);
+        renderEndMessage(question.Pregunta, question.Path);
       }
     }
 
-    function renderEndMessage(message) {
+    function renderEndMessage(message, path) {
+      const baseUrl = window.location.origin;
+      const updatedUrl = path ? `${baseUrl}/${path}` : baseUrl;
+
       formContainer.innerHTML = `
         <div id="homeButtonContainer" style="display: block;">
           <span id="homeButton">🏠</span>
@@ -147,10 +150,15 @@ document.addEventListener('DOMContentLoaded', () => {
       restartButton.textContent = 'Volver al inicio';
       restartButton.className = 'button';
 
-      restartButton.addEventListener('click', resetForm);
+      restartButton.addEventListener('click', () => {
+        resetForm(); // No redirige, solo resetea el formulario
+      });
 
       restartButtonContainer.appendChild(restartButton);
       formContainer.appendChild(restartButtonContainer);
+
+      // Actualizar la URL en la barra de direcciones del navegador
+      history.replaceState({}, '', updatedUrl);
     }
 
     function resetForm() {
