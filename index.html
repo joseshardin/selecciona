@@ -77,8 +77,8 @@
         margin-bottom: 20px;
       }
       button {
-        display: block;
-        width: 100%;
+        display: inline-block; /* Cambiado de block a inline-block */
+        width: 50%;
         padding: 10px;
         background-color: #ea4e64;
         color: #fff;
@@ -90,6 +90,10 @@
       }
       button:hover {
         background-color: #eb5a65;
+      }
+      .button-container {
+        text-align: center;
+        margin-top: 20px;
       }
       p {
         margin-bottom: 20px;
@@ -110,7 +114,7 @@
         margin: 20% auto;
         padding: 20px;
         border-radius: 10px;
-        max-width: 400px;
+        max-width: 500px;
         text-align: center;
         position: relative;
         font-family: "Poppins", sans-serif;
@@ -128,41 +132,65 @@
         cursor: pointer;
       }
       #formContainer {
-        display: none;
+        position: relative;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
-      #formContainer.show {
-        display: block;
+
+      #homeButtonContainer {
+        position: absolute;
+        top: 20px;
+        right: 20px;
       }
-      .additional-content {
-        /*   está por corregir esto*/
-        margin-top: 20px;
-        border: 1px solid #ccc;
-        padding: 10px;
-        border-radius: 5px;
-        background-color: #f9f9f9;
+
+      #homeButton {
+        font-size: 24px;
+        cursor: pointer;
       }
     </style>
   </head>
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-NTLVGV7RJX"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-NTLVGV7RJX");
+  </script>
   <body>
     <div id="welcomeModal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
         <p>
           😊 Bienvenido al asistente para elección de tecnologías Rappi
-          (vertical Retail). Por favor, si tienes una consulta adicional
-          comentarlo al equipo de Onboarding.
+          (vertical Retail). <br /><br />Por favor, si tienes una consulta
+          adicional o mejoras enviar un email a jose.shardin@rappi.com o
+          daniel.moros@rappi.com
         </p>
         <button id="ingresarBtn">Ingresar</button>
       </div>
     </div>
     <div id="formContainer">
+      <div id="homeButtonContainer" style="display: none">
+        <a id="homeButton" href="/index.html">🏠</a>
+      </div>
       <div id="logo">
         <img
           src="https://onbrappi.netlify.app/rappi-logo-1.png"
           alt="Rappi Logo"
         />
       </div>
+      <!-- Aquí va el contenido del formulario -->
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="formulario.js"></script>
   </body>
