@@ -1,18 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
   const welcomeModal = document.getElementById('welcomeModal');
   const formContainer = document.getElementById('formContainer');
+  const homeButtonContainer = document.getElementById('homeButtonContainer');
 
-
-  // Verificar si ya se ha mostrado el modal
   const hasShownModal = sessionStorage.getItem('hasShownModal');
 
-  // Si no se ha mostrado, mostrar el modal y marcarlo como mostrado
   if (!hasShownModal) {
     welcomeModal.style.display = 'block';
     sessionStorage.setItem('hasShownModal', true);
   }
 
-  // Cerrar el modal al hacer clic en la 'X' o en "Ingresar", auqneu ya 'X' no se muestra u.u
   const closeBtn = document.querySelector('.close');
   const ingresarBtn = document.getElementById('ingresarBtn');
 
@@ -24,13 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
   closeBtn.addEventListener('click', closeModal);
   ingresarBtn.addEventListener('click', closeModal);
 
-  // Mostrar el modal al salir de la página
   window.addEventListener('beforeunload', () => {
     sessionStorage.removeItem('hasShownModal');
     welcomeModal.style.display = 'block';
   });
 
-  // URL con link del drive (google sheets). Cambiar de ser necesario!!! 
+  // SOLO cambiar aquí. Esto es lo más imporante!
   const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQChIIMh-HVXcHLNO5GGkmWLeszRQVOfWv3iO5_GkynFVG8F4tVRphmL8V6qBtp79rI3sLsSPu4lYp4/pub?output=csv';
 
   fetch(csvUrl)
@@ -57,12 +53,19 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentQuestion = data.find(q => q.ID === 'q1');
 
     function renderQuestion(question) {
-      // Limpieza de todo
       formContainer.innerHTML = `
+        <div id="homeButtonContainer" style="display: ${currentQuestion.ID === 'q1' ? 'none' : 'block'};">
+          <span id="homeButton">🏠</span>
+        </div>
         <div id="logo">
           <img src="https://onbrappi.netlify.app/rappi-logo-1.png" alt="Rappi Logo">
         </div>
       `;
+
+      const homeButton = formContainer.querySelector('#homeButton');
+      if (homeButton) {
+        homeButton.addEventListener('click', resetForm);
+      }
 
       if (question.Tipo === 'select') {
         const label = document.createElement('label');
@@ -83,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         formContainer.appendChild(select);
 
-        // Contenido adicional de la columna F. Esta vaina no está funcionando bien, por corregir
         if (question.F) {
           const additionalContent = document.createElement('div');
           additionalContent.className = 'additional-content';
@@ -91,10 +93,21 @@ document.addEventListener('DOMContentLoaded', () => {
           formContainer.appendChild(additionalContent);
         }
 
-        select.addEventListener('change', () => {
+        const nextButtonContainer = document.createElement('div');
+        nextButtonContainer.className = 'button-container';
+
+        const nextButton = document.createElement('button');
+        nextButton.textContent = 'Siguiente';
+        nextButton.className = 'button';
+        nextButtonContainer.appendChild(nextButton);
+
+        formContainer.appendChild(nextButtonContainer);
+
+        nextButton.addEventListener('click', () => {
           const nextQuestionId = question.Condiciones[select.value];
           const nextQuestion = data.find(q => q.ID === nextQuestionId);
           if (nextQuestion) {
+            currentQuestion = nextQuestion;
             renderQuestion(nextQuestion);
           } else {
             renderEndMessage(question.Pregunta);
@@ -105,42 +118,45 @@ document.addEventListener('DOMContentLoaded', () => {
         p.innerHTML = question.Pregunta.replace(/\n/g, '<br>');
         formContainer.appendChild(p);
 
-        // Mostrar el contenido adicional de la columna F. Esta vaina no está funcionando bien, por corregir
         if (question.F) {
           const additionalContent = document.createElement('div');
           additionalContent.className = 'additional-content';
           additionalContent.innerHTML = question.F.replace(/\n/g, '<br>');
           formContainer.appendChild(additionalContent);
         }
-      }
 
-      const restartButton = document.createElement('button');
-      restartButton.textContent = 'Volver al inicio';
-      restartButton.className = 'rappi-button';
-      restartButton.addEventListener('click', () => {
-        currentQuestion = data.find(q => q.ID === 'q1');
-        renderQuestion(currentQuestion);
-      });
-      formContainer.appendChild(restartButton);
+        renderEndMessage(question.Pregunta);
+      }
     }
 
     function renderEndMessage(message) {
-      // Limpiar
       formContainer.innerHTML = `
+        <div id="homeButtonContainer" style="display: block;">
+          <span id="homeButton">🏠</span>
+        </div>
         <div id="logo">
           <img src="https://onbrappi.netlify.app/rappi-logo-1.png" alt="Rappi Logo">
         </div>
         <p>${message.replace(/\n/g, '<br>')}</p>
       `;
 
+      const restartButtonContainer = document.createElement('div');
+      restartButtonContainer.className = 'button-container';
+
       const restartButton = document.createElement('button');
       restartButton.textContent = 'Volver al inicio';
-      restartButton.className = 'rappi-button';
-      restartButton.addEventListener('click', () => {
-        currentQuestion = data.find(q => q.ID === 'q1');
-        renderQuestion(currentQuestion);
-      });
-      formContainer.appendChild(restartButton);
+      restartButton.className = 'button';
+
+      restartButton.addEventListener('click', resetForm);
+
+      restartButtonContainer.appendChild(restartButton);
+      formContainer.appendChild(restartButtonContainer);
+    }
+
+    function resetForm() {
+      const firstQuestion = data.find(q => q.ID === 'q1');
+      currentQuestion = firstQuestion;
+      renderQuestion(firstQuestion);
     }
 
     renderQuestion(currentQuestion);
