@@ -1,197 +1,406 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🧡 Tecnologías Rappi Disponibles RETAIL</title>
-    <meta
-      name="description"
-      content="Selecciona las tecnologías disponibles para Rappi Retailer. Contacta a tu comercial asignado si tienes alguna consulta."
-    />
-    <meta
-      name="keywords"
-      content="Rappi, Rappi Retailer, tecnologías, formulario, selección, consulta, API, Open Orders"
-    />
     <style>
-      body {
-        font-family: "Poppins", sans-serif;
-        background-color: #fff;
-        color: #333;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background: linear-gradient(
-          to right,
-          #f29068,
-          #ef7f66,
-          #ed6865,
-          #eb5a65,
-          #ea4e64
-        );
-        overflow-y: auto;
-      }
-      #formContainer {
-        max-width: 700px;
-        width: 100%;
-        max-height: 80%;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        background-color: #fff;
-        animation: fadeIn 0.5s ease-in-out;
-        margin: 20px;
-        overflow: auto;
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
+        :root {
+            --primary-color: #ea4e64;
+            --secondary-color: #f0f0f0;
+            --text-color: #333;
+            --bg-color: #fff;
         }
-        to {
-          opacity: 1;
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(to right, #f29068, #ef7f66, #ed6865, #eb5a65, #ea4e64);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
         }
-      }
-      #logo {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-      }
-      #logo img {
-        max-width: 150px;
-      }
-      label {
-        display: block;
-        margin-bottom: 10px;
-        font-weight: bold;
-        color: #ea4e64;
-      }
-      select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        background-color: #f9f9f9;
-        font-size: 16px;
-        margin-bottom: 20px;
-      }
-      button {
-        display: inline-block; /* Cambiado de block a inline-block */
-        width: 50%;
-        padding: 10px;
-        background-color: #ea4e64;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        margin-top: 20px;
-      }
-      button:hover {
-        background-color: #eb5a65;
-      }
-      .button-container {
-        text-align: center;
-        margin-top: 20px;
-      }
-      p {
-        margin-bottom: 20px;
-      }
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.5);
-      }
-      .modal-content {
-        background-color: #fff;
-        margin: 20% auto;
-        padding: 20px;
-        border-radius: 10px;
-        max-width: 500px;
-        text-align: center;
-        position: relative;
-        font-family: "Poppins", sans-serif;
-      }
-      .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-      }
-      .close:hover,
-      .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-      }
-      #formContainer {
-        position: relative;
-        padding: 20px;
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
 
-      #homeButtonContainer {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-      }
+        #app {
+            background-color: var(--bg-color);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            transition: background-color 0.3s, color 0.3s;
+        }
 
-      #homeButton {
-        font-size: 24px;
-        cursor: pointer;
-      }
+        #logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #logo img {
+            max-width: 150px;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .option {
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .option:hover {
+            background-color: #e0e0e0;
+            transform: scale(1.05);
+        }
+
+        .option.selected {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: var(--secondary-color);
+            text-align: center;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .button:hover {
+            background-color: #eb5a65;
+            transform: scale(1.05);
+        }
+
+        .button.secondary {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: 1px solid #ccc;
+        }
+
+        .button.secondary:hover {
+            background-color: #e0e0e0;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: var(--bg-color);
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #progress-bar {
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        #progress {
+            width: 0;
+            height: 10px;
+            background-color: var(--primary-color);
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+
+        #progress-text {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        #dark-mode-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .dark-mode {
+            --bg-color: #333;
+            --text-color: #f0f0f0;
+            --secondary-color: #555;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
     </style>
-  </head>
-  <!-- Google tag (gtag.js) -->
-  <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=G-NTLVGV7RJX"
-  ></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
-
-    gtag("config", "G-NTLVGV7RJX");
-  </script>
-  <body>
-    <div id="welcomeModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>
-          😊 Bienvenido al asistente para elección de tecnologías Rappi
-          (vertical Retail). <br /><br />Por favor, si tienes una consulta
-          adicional o mejoras enviar un email a jose.shardin@rappi.com o
-          daniel.moros@rappi.com
-        </p>
-        <button id="ingresarBtn">Ingresar</button>
-      </div>
+</head>
+<body>
+    <button id="dark-mode-toggle">🌓</button>
+    <div id="app">
+        <div id="logo">
+            <img src="https://onbrappi.netlify.app/rappi-logo-1.png" alt="Rappi Logo">
+        </div>
+        <h1 style="text-align: center;">Selecciona la tecnología ideal para tu aliado</h1>
+        <div id="progress-bar"><div id="progress"></div></div>
+        <div id="progress-text"></div>
+        <div id="questionContainer"></div>
+        <div id="result"></div>
+        <div class="button-container">
+            <button id="backBtn" class="button secondary" style="display: none;">Volver</button>
+            <button id="resetBtn" class="button">Reiniciar</button>
+            <button id="shareBtn" class="button secondary" style="display: none;">Compartir</button>
+        </div>
     </div>
-    <div id="formContainer">
-      <div id="homeButtonContainer" style="display: none">
-        <a id="homeButton" href="/index.html">🏠</a>
-      </div>
-      <div id="logo">
-        <img
-          src="https://onbrappi.netlify.app/rappi-logo-1.png"
-          alt="Rappi Logo"
-        />
-      </div>
-      <!-- Aquí va el contenido del formulario -->
+
+    <div id="welcomeModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>😊 Bienvenido al asistente para elección de tecnologías Rappi (vertical Retail).</p>
+            <p>Por favor, si tienes una consulta adicional o mejoras enviar un email a jose.shardin@rappi.com o daniel.moros@rappi.com</p>
+            <button id="ingresarBtn" class="button">Ingresar</button>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <script src="formulario.js"></script>
-  </body>
+    <script>
+        let questions = [];
+        let currentQuestion = null;
+        let history = [];
+        const MAX_QUESTIONS = 5;
+
+        function loadQuestions() {
+            Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vQChIIMh-HVXcHLNO5GGkmWLeszRQVOfWv3iO5_GkynFVG8F4tVRphmL8V6qBtp79rI3sLsSPu4lYp4/pub?output=csv', {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    questions = results.data.map(row => ({
+                        id: row.ID,
+                        pregunta: row.Pregunta,
+                        tipo: row.Tipo,
+                        opciones: row.Opciones ? row.Opciones.split(',').map(o => o.trim()) : [],
+                        condiciones: row.Condiciones ? JSON.parse(row.Condiciones.replace(/'/g, '"')) : {},
+                        path: row.Path
+                    }));
+                    currentQuestion = questions.find(q => q.id === 'q1');
+                    renderQuestion();
+                }
+            });
+        }
+
+        function renderQuestion() {
+            const container = document.getElementById('questionContainer');
+            container.innerHTML = '';
+
+            if (currentQuestion.tipo === 'select') {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question fade-in';
+                questionElement.innerHTML = `<h2>${currentQuestion.pregunta}</h2>`;
+                container.appendChild(questionElement);
+
+                const optionsContainer = document.createElement('div');
+                optionsContainer.className = 'options';
+                currentQuestion.opciones.forEach(option => {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'option fade-in';
+                    optionElement.textContent = option;
+                    optionElement.addEventListener('click', () => selectOption(option));
+                    optionsContainer.appendChild(optionElement);
+                });
+                container.appendChild(optionsContainer);
+                updateProgress();
+            } else if (currentQuestion.tipo === 'text') {
+                renderResult(currentQuestion.pregunta, currentQuestion.path);
+            }
+
+            document.getElementById('backBtn').style.display = history.length > 0 ? 'inline-block' : 'none';
+        }
+
+        function selectOption(option) {
+            history.push(currentQuestion);
+            const nextQuestionId = currentQuestion.condiciones[option];
+            if (nextQuestionId) {
+                currentQuestion = questions.find(q => q.id === nextQuestionId);
+                renderQuestion();
+            } else {
+                renderResult(option, currentQuestion.path);
+            }
+        }
+
+        function renderResult(message, path) {
+            const resultContainer = document.getElementById('result');
+            resultContainer.innerHTML = `<h3>Recomendación:</h3><p>${message}</p>`;
+            resultContainer.className = 'fade-in';
+            document.getElementById('questionContainer').innerHTML = '';
+            document.getElementById('shareBtn').style.display = 'inline-block';
+
+            const baseUrl = window.location.origin;
+            const updatedUrl = path ? `${baseUrl}/${path}` : baseUrl;
+            history.pushState({}, '', updatedUrl);
+
+            if (typeof gtag === 'function') {
+                gtag('event', 'page_view', {
+                    'page_location': updatedUrl,
+                    'page_path': updatedUrl
+                });
+            }
+
+            document.getElementById('progress-bar').style.display = 'none';
+            document.getElementById('progress-text').style.display = 'none';
+        }
+
+        function reset() {
+            history = [];
+            currentQuestion = questions.find(q => q.id === 'q1');
+            renderQuestion();
+            document.getElementById('result').innerHTML = '';
+            document.getElementById('shareBtn').style.display = 'none';
+            document.getElementById('progress-bar').style.display = 'block';
+            document.getElementById('progress-text').style.display = 'block';
+        }
+
+        function goBack() {
+            if (history.length > 0) {
+                currentQuestion = history.pop();
+                renderQuestion();
+                document.getElementById('result').innerHTML = '';
+                document.getElementById('shareBtn').style.display = 'none';
+                document.getElementById('progress-bar').style.display = 'block';
+                document.getElementById('progress-text').style.display = 'block';
+            }
+        }
+
+        function updateProgress() {
+            const progress = document.getElementById('progress');
+            const progressText = document.getElementById('progress-text');
+            const currentProgress = Math.min(history.length + 1, MAX_QUESTIONS);
+            const percentage = (currentProgress / MAX_QUESTIONS) * 100;
+            progress.style.width = `${percentage}%`;
+            progressText.textContent = `Pregunta ${currentProgress} de ≈ ${MAX_QUESTIONS}`;
+        }
+
+        function shareResult() {
+            const result = document.getElementById('result').innerText;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Mi recomendación de tecnología Rappi',
+                    text: result,
+                    url: window.location.href
+                }).then(() => console.log('Contenido compartido exitosamente'))
+                .catch((error) => console.log('Error al compartir', error));
+            } else {
+                alert('La función de compartir no está disponible en este dispositivo');
+            }
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadQuestions();
+            document.getElementById('resetBtn').addEventListener('click', reset);
+            document.getElementById('backBtn').addEventListener('click', goBack);
+            document.getElementById('shareBtn').addEventListener('click', shareResult);
+            document.getElementById('dark-mode-toggle').addEventListener('click', toggleDarkMode);
+
+            const modal = document.getElementById('welcomeModal');
+            const closeBtn = document.getElementsByClassName('close')[0];
+            const ingresarBtn = document.getElementById('ingresarBtn');
+
+            if (!sessionStorage.getItem('hasShownModal')) {
+                modal.style.display = 'block';
+                sessionStorage.setItem('hasShownModal', 'true');
+            }
+
+            closeBtn.onclick = function() {
+                modal.style.display = 'none';
+            }
+
+            ingresarBtn.onclick = function() {
+                modal.style.display = 'none';
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
+        });
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NTLVGV7RJX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-NTLVGV7RJX');
+    </script>
+</body>
 </html>
