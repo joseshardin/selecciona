@@ -215,7 +215,7 @@
         <div class="button-container">
             <button id="backBtn" class="button secondary" style="display: none;">Volver</button>
             <button id="resetBtn" class="button">Reiniciar</button>
-            <button id="shareBtn" class="button secondary" style="display: none;">Compartir</button>
+            <button id="copyRecommendationBtn" class="button secondary" style="display: none;">Copiar recomendación</button>
         </div>
     </div>
 
@@ -298,10 +298,10 @@
             resultContainer.innerHTML = `<h3>Recomendación:</h3><p>${message}</p>`;
             resultContainer.className = 'fade-in';
             document.getElementById('questionContainer').innerHTML = '';
-            document.getElementById('shareBtn').style.display = 'inline-block';
+            document.getElementById('copyRecommendationBtn').style.display = 'inline-block';
 
-            const baseUrl = window.location.origin;
-            const updatedUrl = path ? `${baseUrl}/${path}` : baseUrl;
+            const baseUrl = window.location.origin + window.location.pathname;
+            const updatedUrl = path ? `${baseUrl}#${path}` : baseUrl;
             history.pushState({}, '', updatedUrl);
 
             if (typeof gtag === 'function') {
@@ -320,7 +320,7 @@
             currentQuestion = questions.find(q => q.id === 'q1');
             renderQuestion();
             document.getElementById('result').innerHTML = '';
-            document.getElementById('shareBtn').style.display = 'none';
+            document.getElementById('copyRecommendationBtn').style.display = 'none';
             document.getElementById('progress-bar').style.display = 'block';
             document.getElementById('progress-text').style.display = 'block';
         }
@@ -330,7 +330,7 @@
                 currentQuestion = history.pop();
                 renderQuestion();
                 document.getElementById('result').innerHTML = '';
-                document.getElementById('shareBtn').style.display = 'none';
+                document.getElementById('copyRecommendationBtn').style.display = 'none';
                 document.getElementById('progress-bar').style.display = 'block';
                 document.getElementById('progress-text').style.display = 'block';
             }
@@ -345,18 +345,14 @@
             progressText.textContent = `Pregunta ${currentProgress} de ≈ ${MAX_QUESTIONS}`;
         }
 
-        function shareResult() {
+        function copyRecommendation() {
             const result = document.getElementById('result').innerText;
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Mi recomendación de tecnología Rappi',
-                    text: result,
-                    url: window.location.href
-                }).then(() => console.log('Contenido compartido exitosamente'))
-                .catch((error) => console.log('Error al compartir', error));
-            } else {
-                alert('La función de compartir no está disponible en este dispositivo');
-            }
+            const fullText = `${result}\n\nURL: ${window.location.href}`;
+            navigator.clipboard.writeText(fullText).then(() => {
+                alert('Recomendación copiada al portapapeles');
+            }).catch(err => {
+                console.error('Error al copiar la recomendación: ', err);
+            });
         }
 
         function toggleDarkMode() {
@@ -367,7 +363,7 @@
             loadQuestions();
             document.getElementById('resetBtn').addEventListener('click', reset);
             document.getElementById('backBtn').addEventListener('click', goBack);
-            document.getElementById('shareBtn').addEventListener('click', shareResult);
+            document.getElementById('copyRecommendationBtn').addEventListener('click', copyRecommendation);
             document.getElementById('dark-mode-toggle').addEventListener('click', toggleDarkMode);
 
             const modal = document.getElementById('welcomeModal');
